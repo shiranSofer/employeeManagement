@@ -1,9 +1,11 @@
+import json
+
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
-from input_dialog import InputDialog
 from employee import Employee
+from input_dialog import InputDialog
 
 
 class MainWindow(QMainWindow):
@@ -11,6 +13,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         loadUi('management.ui', self)
         self.setWindowTitle('ניהול עובדים')
+        self.load()
         self.add_button.clicked.connect(self.on_add_button_clicked)
 
     @pyqtSlot()
@@ -21,5 +24,11 @@ class MainWindow(QMainWindow):
             employee = Employee(dialog.get_inputs()[0], dialog.get_inputs()[1])
             self.list_container.insertItem(row, str(employee))
             employee.save_employee()
-            print(dialog.get_inputs()[0])
 
+    def load(self):
+        self.list_container.clear()
+        with open("employee.json", "r") as f:
+            data = json.load(f)
+        items = data['employee_details']
+        for item in items:
+            self.list_container.addItem(item['employee_name'] + ' ' + item['employee_id'])

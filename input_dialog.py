@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit, QDialogButtonBox, QFormLayout
+from PyQt5.QtWidgets import QDialog, QLineEdit, QDialogButtonBox, QFormLayout, QLabel
 
 
 class InputDialog(QDialog):
@@ -7,11 +7,13 @@ class InputDialog(QDialog):
 
         self.first = QLineEdit(self)
         self.second = QLineEdit(self)
+        self.third = QLabel(self)
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
 
         layout = QFormLayout(self)
-        layout.addRow("First text", self.first)
-        layout.addRow("Second text", self.second)
+        layout.addRow("Employee's Name", self.first)
+        layout.addRow("Employee's ID", self.second)
+        layout.addRow('', self.third)
         layout.addWidget(buttonBox)
 
         buttonBox.accepted.connect(self.accept)
@@ -19,3 +21,9 @@ class InputDialog(QDialog):
 
     def get_inputs(self):
         return [self.first.text(), self.second.text()]
+
+    def accept(self):
+        if '' in {self.first.text(), self.second.text()}:
+            self.third.setText('Name/ID cannot be empty')
+        else:
+            super().accept()

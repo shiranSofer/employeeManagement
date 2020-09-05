@@ -9,7 +9,7 @@ class Employee:
     def __init__(self, employee_id: int, name: str):
         """
         init employee
-        :param employee_id: worker id.
+        :param employee_id: employee id.
         :param name: name.
         """
         self._employee_id = employee_id
