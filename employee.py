@@ -42,6 +42,7 @@ class Employee:
 
             temp = data['employee_details']
 
+
             # python object to be appended
             employee = {"employee_id": self._employee_id, "employee_name": self._name}
 
@@ -52,6 +53,15 @@ class Employee:
 
         except Exception as error:
             print(error)
+
+    def if_exist(self):
+        with open("employee.json", "r") as f:
+            data = json.load(f)
+
+        temp = data['employee_details']
+        print(list(filter(lambda em: em['employee_id'] == str(self._employee_id), temp)))
+        return list(filter(lambda em: em['employee_id'] == str(self._employee_id), temp))
+
 
     def __str__(self):
         return f"{self._name}, {self._employee_id}"

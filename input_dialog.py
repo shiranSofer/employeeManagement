@@ -24,6 +24,9 @@ class InputDialog(QDialog):
 
     def accept(self):
         if '' in {self.first.text(), self.second.text()}:
-            self.third.setText('Name/ID cannot be empty')
+            self.print_label('Name/ID cannot be empty')
         else:
             super().accept()
+
+    def print_label(self, msg):
+        self.third.setText(msg)

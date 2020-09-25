@@ -21,9 +21,12 @@ class MainWindow(QMainWindow):
         row = self.list_container.currentRow()
         dialog = InputDialog()
         if dialog.exec():
-            employee = Employee(dialog.get_inputs()[0], dialog.get_inputs()[1])
-            self.list_container.insertItem(row, str(employee))
-            employee.save_employee()
+            employee = Employee(dialog.get_inputs()[1], dialog.get_inputs()[0])
+            if not employee.if_exist():
+                self.list_container.insertItem(row, str(employee))
+                employee.save_employee()
+            else:
+                dialog.print_label("employee exist")
 
     def load(self):
         self.list_container.clear()
